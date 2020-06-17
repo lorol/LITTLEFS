@@ -9,8 +9,7 @@
 
 ### Installation
 
-- Make sure you use one of the supported versions of Arduino IDE and have ESP32 core installed
- <span style="color:red">**Tested only with commit b92c58d of arduino-esp32 core (IDF 3.3). The release 1.0.4 is on an older IDF !**</span>
+- <b>So far it is tested only with commit b92c58d of arduino-esp32 core (IDF 3.3). The release 1.0.4 is on an older IDF!</b>
 - Copy <b>LITTLEFS</b> folder to Arduino IDE embedded libraries place
 - For Win, the default place of arduino-esp32 core libraries is somewhere like: 
 ```C:\Users\<username>\AppData\Local\Arduino15\packages\esp32\hardware\esp32\1.0.4\libraries ```
