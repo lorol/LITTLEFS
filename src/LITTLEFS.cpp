@@ -18,7 +18,8 @@
 //esp_err_t esp_littlefs_format(const char* partition_label);
 //esp_err_t esp_littlefs_info(const char* partition_label, size_t *total_bytes, size_t *used_bytes);
 
-#define LFS_NAME "spiffs"
+//#define LFS_NAME "spiffs"
+static constexpr const char LFS_NAME[] = "spiffs";
 
 #include "vfs_api.h"
 
