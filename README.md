@@ -6,6 +6,7 @@
 - Independent library, no need ESP-IDF SDK and arduino + littlefs component recompiling / re-integration, but it could be implemented this way, too.
 - Functionality is the same and SPIFFS partition scheme and data folder meaning are kept
 - You can use either LITTLEFS or SPIFFS but not both simultaneously on given Arduino project
+- A PR to embed it to esp32 core is made too. See the [PR status here](https://github.com/espressif/arduino-esp32/pull/4096) 
 
 ### Installation
 
