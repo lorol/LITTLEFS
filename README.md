@@ -1,16 +1,16 @@
 # LITTLEFS
 ## LittleFS library for arduino-esp32
 
+#### Warning: Tested only with git arduino-esp32 #b92c58d core, which is for ESP-IDF 3.3! </br> With other versions/releases of the core including release 1.0.4, especially against different IDF this will NOT not work.
+
 - A LittleFS wrapper for Arduino ESP32 of [Mbed LittleFS](https://github.com/ARMmbed/littlefs)
 - Based on [ESP-IDF port of joltwallet/esp_littlefs](https://github.com/joltwallet/esp_littlefs) , thank you Brian!
-- Independent library, no need ESP-IDF SDK and arduino + littlefs component recompiling / re-integration, but it could be implemented this way, too.
 - Functionality is the same and SPIFFS partition scheme and data folder meaning are kept
 - You can use either LITTLEFS or SPIFFS but not both simultaneously on given Arduino project
 - A PR to embed it to esp32 core is made too. See the [PR status here](https://github.com/espressif/arduino-esp32/pull/4096) 
 
 ### Installation
 
-- <b>So far it is tested only with commit b92c58d of arduino-esp32 core (IDF 3.3). The release 1.0.4 is on an older IDF!</b>
 - Copy <b>LITTLEFS</b> folder to Arduino IDE embedded libraries place
 - For Win, the default place of arduino-esp32 core libraries is somewhere like: 
 ```C:\Users\<username>\AppData\Local\Arduino15\packages\esp32\hardware\esp32\1.0.4\libraries ```
