@@ -54,3 +54,6 @@ packages\esp32\tools\mkspiffs\<mklittlefs rev. x.x.x>\ or on checkout (dev) envi
 - This work is based on [Mbed LittleFS](https://github.com/ARMmbed/littlefs) , [ESP-IDF port of joltwallet/esp_littlefs](https://github.com/joltwallet/esp_littlefs) , [Espressif Arduino core for the ESP32, the ESP-IDF - SPIFFS Library](https://github.com/espressif/arduino-esp32/tree/master/libraries/SPIFFS)
 - Licensed under GPL v2 ([text](LICENSE))
 
+## To Do
+
+- Supporting different IDF versions 
