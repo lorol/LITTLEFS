@@ -5,7 +5,7 @@
  */
 
 //#define LOG_LOCAL_LEVEL 4
-//#define CONFIG_LITTLEFS_FOR_IDF_3_2   /* For old IDF - like in release 1.0.4 */
+#define CONFIG_LITTLEFS_FOR_IDF_3_2   /* For old IDF - like in release 1.0.4 */
 
 #include "esp_log.h"
 #include "esp_spi_flash.h"

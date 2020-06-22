@@ -9,9 +9,9 @@
 - A PR to embed it to esp32 core is made too. See the [PR status here](https://github.com/espressif/arduino-esp32/pull/4096) 
 
 #### Warning: Depends on ESP-IDF version
-- For esp32-core release 1.0.4, uncomment this line of <b>esp_littlefs.c</b>:
+- For esp32-core newer than release 1.0.4 (IDF v3.3 or later) you can comment this line of <b>esp_littlefs.c</b> to use the <b>vfs_littlefs_utime</b> feature:
 ```
-//#define CONFIG_LITTLEFS_FOR_IDF_3_2 
+#define CONFIG_LITTLEFS_FOR_IDF_3_2 
 ```
 
 ### Installation
