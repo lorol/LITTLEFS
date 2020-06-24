@@ -2,6 +2,13 @@
  * @file esp_littlefs.c
  * @brief Maps LittleFS <-> ESP_VFS 
  * @author Brian Pugh
+ *
+ * @note Modified and used by lorol for Arduino esp32 core
+ *  
+ * Copyright 2020 Brian Pugh
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 //#define LOG_LOCAL_LEVEL 4
@@ -41,6 +48,8 @@ static const char TAG[] = "esp_littlefs";
 #define CONFIG_LITTLEFS_LOOKAHEAD_SIZE 128
 #define CONFIG_LITTLEFS_CACHE_SIZE 128
 #define CONFIG_LITTLEFS_BLOCK_CYCLES 512
+
+//#define CONFIG_SECURE_FLASH_ENC_ENABLED 1 /* For encrypted, in part.csv:  flash_test,  data, spiffs, , 512K, encrypted */
 
 #ifdef CONFIG_LITTLEFS_FOR_IDF_3_2
 #define CONFIG_LITTLEFS_USE_MTIME 0
@@ -529,14 +538,6 @@ static esp_err_t esp_littlefs_init(const esp_vfs_littlefs_conf_t* conf)
     if (!partition) {
         ESP_LOGE(TAG, "partition \"%s\" could not be found", conf->partition_label);
         err = ESP_ERR_NOT_FOUND;
-        goto exit;
-    }
-
-    if (partition->encrypted) {
-        // TODO: allow encryption; should probably be fine,
-        // just not allowing until tested.
-        ESP_LOGE(TAG, "littlefs can not run on encrypted partition");
-        err = ESP_ERR_INVALID_STATE;
         goto exit;
     }
 
