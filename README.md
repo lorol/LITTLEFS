@@ -4,26 +4,25 @@
 
 - A LittleFS wrapper for Arduino ESP32 of [Mbed LittleFS](https://github.com/ARMmbed/littlefs)
 - Based on [ESP-IDF port of joltwallet/esp_littlefs](https://github.com/joltwallet/esp_littlefs) , thank you Brian!
+- See also the [LillteFS library for ESP8266 core](https://github.com/esp8266/Arduino/tree/master/libraries/LittleFS) 
 - Functionality is similar to SPIFFS
 - Either LITTLEFS or SPIFFS but not both simultaneously can be used in same Arduino project
 - [Related PR in esp32 core development](https://github.com/espressif/arduino-esp32/pull/4096) 
+- See also the [LillteFS library for ESP8266 core](https://github.com/esp8266/Arduino/tree/master/libraries/LittleFS) 
 
-#### Warning: Depends on ESP-IDF, esp32 core and esp_littlefs versions
+##### Warning: It depends on ESP-IDF, esp32 core, esp_littlefs and Mbed LittleFS versions
 
-- Tested on master [esp32-core #git b92c58d](https://github.com/espressif/arduino-esp32/commit/b92c58d74b151c7a3b56db4e78f2d3c90c16446f) and on core [release 1.0.4](https://github.com/espressif/arduino-esp32/releases/tag/1.0.4)
-- For esp32-core, newer than release 1.0.4 (IDF v3.3 or later) you can comment this line of <b>esp_littlefs.c</b> to use the <b>vfs_littlefs_utime</b> feature:
-```
-#define CONFIG_LITTLEFS_FOR_IDF_3_2 
-```
+- Tested with [esp32-core #git b92c58d](https://github.com/espressif/arduino-esp32/commit/b92c58d74b151c7a3b56db4e78f2d3c90c16446f) and on core [release 1.0.4](https://github.com/espressif/arduino-esp32/releases/tag/1.0.4)
 
 ### Installation
 
-- Copy <b>LITTLEFS</b> to Arduino IDE libraries
+- Copy <b>LITTLEFS</b> to other Arduino IDE libraries
 </br>(see File > Preferences > Sketchbook location). 
 
 ### Usage
 
-- In your existing code, replace SPIFFS like this 
+- use LITTLEFS same way as SPIFFS
+- A quick startup based on your existing code you can re-define SPIFFS like this 
 ``` 
 #define USE_LittleFS
 
@@ -47,18 +46,14 @@
 
 ### Arduino ESP32 LittleFS filesystem upload tool 
 
-- Download the tool jar from [here](https://github.com/lorol/arduino-esp32littlefs-plugin/raw/master/src/bin/esp32littlefs.jar)
+- Download the jar file from [here](https://github.com/lorol/arduino-esp32littlefs-plugin/raw/master/src/bin/esp32littlefs.jar)
 - In your Arduino sketchbook directory, create tools directory if it doesn't exist yet.
-- Copy the tool into tools directory (the path should be ```<home_dir>/Arduino/tools/ESP32LittleFS/tool/esp32littlefs.jar```).
-- You need the [mklittlefs tool](https://github.com/earlephilhower/mklittlefs)  Download the [release](https://github.com/earlephilhower/mklittlefs/releases) and copy it to 
-packages\esp32\tools\mkspiffs\<mklittlefs rev. x.x.x>\ or on checkout (dev) environment to: packages\esp32\hardware\esp32\<release>\tools\mklittlefs\
+- Copy the tool into tools directory ```<home_dir>/Arduino/tools/ESP32LittleFS/tool/esp32littlefs.jar```
+- Requires [mklittlefs executable](https://github.com/earlephilhower/mklittlefs) - download the zipped binary from [here](https://github.com/earlephilhower/mklittlefs/releases) or <b>esp-quick-toolchain</b> [here](https://github.com/earlephilhower/esp-quick-toolchain/releases) 
+- Copy the binary to ```packages\esp32\hardware\esp32\<x.x.x>\tools\mklittlefs\``` folder
 - Restart Arduino IDE. 
 
 ## Credits and license
 
 - This work is based on [Mbed LittleFS](https://github.com/ARMmbed/littlefs) , [ESP-IDF port of joltwallet/esp_littlefs](https://github.com/joltwallet/esp_littlefs) , [Espressif Arduino core for the ESP32, the ESP-IDF - SPIFFS Library](https://github.com/espressif/arduino-esp32/tree/master/libraries/SPIFFS)
 - Licensed under GPL v2 ([text](LICENSE))
-
-## To Do
-
-- Supporting smarter different IDF versions 
