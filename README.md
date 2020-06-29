@@ -8,7 +8,6 @@
 - Functionality is similar to SPIFFS
 - Either LITTLEFS or SPIFFS but not both simultaneously can be used in same Arduino project
 - [Related PR in esp32 core development](https://github.com/espressif/arduino-esp32/pull/4096) 
-- See also the [LillteFS library for ESP8266 core](https://github.com/esp8266/Arduino/tree/master/libraries/LittleFS) 
 
 ##### Warning: It depends on ESP-IDF, esp32 core, esp_littlefs and Mbed LittleFS versions
 
@@ -49,7 +48,8 @@
 - Download the jar file from [here](https://github.com/lorol/arduino-esp32littlefs-plugin/raw/master/src/bin/esp32littlefs.jar)
 - In your Arduino sketchbook directory, create tools directory if it doesn't exist yet.
 - Copy the tool into tools directory ```<home_dir>/Arduino/tools/ESP32LittleFS/tool/esp32littlefs.jar```
-- Requires [mklittlefs executable](https://github.com/earlephilhower/mklittlefs) - download the zipped binary from [here](https://github.com/earlephilhower/mklittlefs/releases) or <b>esp-quick-toolchain</b> [here](https://github.com/earlephilhower/esp-quick-toolchain/releases) 
+- Alternatively you can replace the [arduino-esp32fs-plugin](https://github.com/me-no-dev/arduino-esp32fs-plugin/pull/23) with [this variant](https://github.com/lorol/arduino-esp32fs-plugin), which supports SPIFFS and LittleFS, both
+- Requires [mklittlefs executable](https://github.com/earlephilhower/mklittlefs) - download the zipped binary [here](https://github.com/earlephilhower/mklittlefs/releases) or from <b>esp-quick-toolchain</b> releases [here](https://github.com/earlephilhower/esp-quick-toolchain/releases) 
 - Copy the binary to ```packages\esp32\hardware\esp32\<x.x.x>\tools\mklittlefs\``` folder
 - Restart Arduino IDE. 
 
