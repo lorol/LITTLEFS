@@ -33,14 +33,14 @@
   #include <SPIFFS.h>
 #endif 
  ```
-### Differences with SPIFFS (and in this implementation)
+### Differences with SPIFFS 
 
-- LittleFS has folders, you my need to tweak your code to iterate files in folders
-- Root: /someting  = something, so attention to /
-- Lower level littlefs library cannot mount on NULL as partition_label name, while SPIFFS can
-- Lower level littlefs library does not need maxOpenFiles parameter
-- Speed (LITTLEFS_Test.ino) 1048576 bytes written in 16238 ms / 1048576 bytes read in 918 ms
-- Speed (SPIFFS_Test.ino)   1048576 bytes written in 65971 ms / 1048576 bytes read in 680 ms
+- LittleFS has folders, you need need to iterate files in folders
+- At root a "/folder" = "folder"
+- Requires a label for mount point, NULL will not work
+- maxOpenFiles parameter is unused, kept for compatibility
+- Speed is 4-5 times faster writing, 1.5 times slower reading
+- LITTLEFS.mkdir(path) and  LITTLEFS.rmdir(path)
 
 
 ### Arduino ESP32 LittleFS filesystem upload tool 

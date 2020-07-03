@@ -1173,11 +1173,11 @@ static int vfs_littlefs_unlink(void* ctx, const char *path) {
         return -1;
     }
 
-    if (info.type == LFS_TYPE_DIR) {
-        sem_give(efs);
-        ESP_LOGV(TAG, "Cannot unlink a directory.");
-        return LFS_ERR_ISDIR;
-    }
+    //if (info.type == LFS_TYPE_DIR) {
+    //    sem_give(efs);
+    //    ESP_LOGV(TAG, "Cannot unlink a directory.");
+    //    return LFS_ERR_ISDIR;
+    //}
 
     res = lfs_remove(efs->fs, path);
     if (res < 0) {
@@ -1420,7 +1420,7 @@ static int vfs_littlefs_rmdir(void* ctx, const char* name) {
     }
 
     /* Unlink the dir */
-    res = lfs_remove(efs->fs, name);
+    res = lfs_remove(efs->fs, name);  
     sem_give(efs);
     if ( res < 0) {
         errno = -res;
