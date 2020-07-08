@@ -12,6 +12,7 @@
 ##### Warning: It depends on ESP-IDF, esp32 core, esp_littlefs and Mbed LittleFS versions
 
 - Tested with [esp32-core #git b92c58d](https://github.com/espressif/arduino-esp32/commit/b92c58d74b151c7a3b56db4e78f2d3c90c16446f) and on core [release 1.0.4](https://github.com/espressif/arduino-esp32/releases/tag/1.0.4)
+- See LITTLEFS_time example for enabling file timestamps
 
 ### Installation
 
@@ -39,8 +40,14 @@
 - At root a "/folder" = "folder"
 - Requires a label for mount point, NULL will not work
 - maxOpenFiles parameter is unused, kept for compatibility
-- Speed is 4-5 times faster writing, 1.5 times slower reading
 - LITTLEFS.mkdir(path) and  LITTLEFS.rmdir(path)
+- Speed comparison based on <b>LittleFS_test.ino</b> sketch (for a file 1048576 bytes):
+
+|Filesystem|Read time [ms]|Write time [ms]|
+|----|----|----|
+|FAT|276|14493|
+|SPIFFS|767|65622|
+|LITTLEFS|916|16200|
 
 
 ### Arduino ESP32 LittleFS filesystem upload tool 
@@ -52,6 +59,22 @@
 - Requires [mklittlefs executable](https://github.com/earlephilhower/mklittlefs) - download the zipped binary [here](https://github.com/earlephilhower/mklittlefs/releases) or from <b>esp-quick-toolchain</b> releases [here](https://github.com/earlephilhower/esp-quick-toolchain/releases) 
 - Copy the binary to ```packages\esp32\hardware\esp32\<x.x.x>\tools\mklittlefs\``` folder
 - Restart Arduino IDE. 
+
+### PlatformIO
+ (notes from [BlueAndi](https://github.com/BlueAndi) )
+- Add to _platformio.ini_:
+ `extra_scripts = replace_fs.py`
+ 
+- Add _replace_fs.py_ to project root directory (where platformio.ini is located):
+ 
+ ```python
+ Import("env")
+ print("Replace MKSPIFFSTOOL with mklittlefs.exe")
+ env.Replace (MKSPIFFSTOOL = "mklittlefs.exe")
+ ```
+ 
+- Add _mklittlefs.exe_ to project root directory as well.
+
 
 ## Credits and license
 
