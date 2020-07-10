@@ -21,7 +21,7 @@
 
 ### Usage
 
-- use LITTLEFS same way as SPIFFS
+- Use LITTLEFS same way as SPIFFS
 - A quick startup based on your existing code you can re-define SPIFFS like this 
 ``` 
 #define USE_LittleFS
@@ -57,7 +57,8 @@
 - Copy the tool into tools directory ```<home_dir>/Arduino/tools/ESP32LittleFS/tool/esp32littlefs.jar```
 - Alternatively you can replace the [arduino-esp32fs-plugin](https://github.com/me-no-dev/arduino-esp32fs-plugin/pull/23) with [this variant](https://github.com/lorol/arduino-esp32fs-plugin), which supports SPIFFS and LittleFS, both
 - Requires [mklittlefs executable](https://github.com/earlephilhower/mklittlefs) - download the zipped binary [here](https://github.com/earlephilhower/mklittlefs/releases) or from <b>esp-quick-toolchain</b> releases [here](https://github.com/earlephilhower/esp-quick-toolchain/releases) 
-- Copy the binary to ```packages\esp32\hardware\esp32\<x.x.x>\tools\mklittlefs\``` folder
+- You need [mklittlefs tool](https://github.com/earlephilhower/mklittlefs)  Download the [release](https://github.com/earlephilhower/mklittlefs/releases) 
+- Copy it to <b>/tools</b> folder of esp32 platform where <b>espota</b> and <b>esptool</b> (.py or.exe) tools are located
 - Restart Arduino IDE. 
 
 ### PlatformIO
