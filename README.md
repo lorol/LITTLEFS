@@ -6,18 +6,18 @@
 - Based on [ESP-IDF port of joltwallet/esp_littlefs](https://github.com/joltwallet/esp_littlefs) , thank you Brian!
 - See also the [LillteFS library for ESP8266 core](https://github.com/esp8266/Arduino/tree/master/libraries/LittleFS) 
 - Functionality is similar to SPIFFS
-- Either LITTLEFS or SPIFFS but not both simultaneously can be used in same Arduino project
-- [Related PR in esp32 core development](https://github.com/espressif/arduino-esp32/pull/4096) 
-
-##### Warning: It depends on ESP-IDF, esp32 core, esp_littlefs and Mbed LittleFS versions
-
+- [Related PR at esp32 core development](https://github.com/espressif/arduino-esp32/pull/4096) 
+- [Related PR at esp-idf development](https://github.com/espressif/esp-idf/pull/5469)
+```diff
+! Warning: This wrapper depends on ESP-IDF, esp32 core, esp_littlefs and Mbed LittleFS versions
+```
+- For esp32 core release 1.0.4 w/ IDFv3.2 Uncomment this line in **esp_littlefs.c**:  ```//#define CONFIG_LITTLEFS_FOR_IDF_3_2```
 - Tested with [esp32-core #git b92c58d](https://github.com/espressif/arduino-esp32/commit/b92c58d74b151c7a3b56db4e78f2d3c90c16446f) and on core [release 1.0.4](https://github.com/espressif/arduino-esp32/releases/tag/1.0.4)
-- See LITTLEFS_time example for enabling file timestamps
+- See LITTLEFS_time example with file timestamps that works with esp32 core on IDF v3.3
 
 ### Installation
 
-- Copy <b>LITTLEFS</b> to other Arduino IDE libraries
-</br>(see File > Preferences > Sketchbook location). 
+- Copy **LITTLEFS** to Arduino IDE **/libraries** folder (File > Preferences > Sketchbook location). 
 
 ### Usage
 
@@ -40,8 +40,8 @@
 - At root a "/folder" = "folder"
 - Requires a label for mount point, NULL will not work
 - maxOpenFiles parameter is unused, kept for compatibility
-- LITTLEFS.mkdir(path) and  LITTLEFS.rmdir(path)
-- Speed comparison based on <b>LittleFS_test.ino</b> sketch (for a file 1048576 bytes):
+- LITTLEFS.mkdir(path) and  LITTLEFS.rmdir(path) work as expected for folders
+- Speed comparison based on **LittleFS_test.ino** sketch (for a file 1048576 bytes):
 
 |Filesystem|Read time [ms]|Write time [ms]|
 |----|----|----|
@@ -52,13 +52,9 @@
 
 ### Arduino ESP32 LittleFS filesystem upload tool 
 
-- Download the jar file from [here](https://github.com/lorol/arduino-esp32littlefs-plugin/raw/master/src/bin/esp32littlefs.jar)
-- In your Arduino sketchbook directory, create tools directory if it doesn't exist yet.
-- Copy the tool into tools directory ```<home_dir>/Arduino/tools/ESP32LittleFS/tool/esp32littlefs.jar```
-- Alternatively you can replace the [arduino-esp32fs-plugin](https://github.com/me-no-dev/arduino-esp32fs-plugin/pull/23) with [this variant](https://github.com/lorol/arduino-esp32fs-plugin), which supports SPIFFS and LittleFS, both
-- Requires [mklittlefs executable](https://github.com/earlephilhower/mklittlefs) - download the zipped binary [here](https://github.com/earlephilhower/mklittlefs/releases) or from <b>esp-quick-toolchain</b> releases [here](https://github.com/earlephilhower/esp-quick-toolchain/releases) 
-- You need [mklittlefs tool](https://github.com/earlephilhower/mklittlefs)  Download the [release](https://github.com/earlephilhower/mklittlefs/releases) 
-- Copy it to <b>/tools</b> folder of esp32 platform where <b>espota</b> and <b>esptool</b> (.py or.exe) tools are located
+- Use (replace if exists) [arduino-esp32fs-plugin](https://github.com/me-no-dev/arduino-esp32fs-plugin/pull/23 ) with [this variant](https://github.com/lorol/arduino-esp32fs-plugin), which supports SPIFFS, LittleFS and FatFS
+- Requires [mklittlefs executable](https://github.com/earlephilhower/mklittlefs) which is available [in releases section here](https://github.com/lorol/arduino-esp32fs-plugin ) or download the zipped binary [here](https://github.com/earlephilhower/mklittlefs/releases) or from **esp-quick-toolchain** releases [here](https://github.com/earlephilhower/esp-quick-toolchain/releases) 
+- Copy it to **/tools** folder of esp32 platform where **espota** and **esptool** (.py or.exe) tools are located
 - Restart Arduino IDE. 
 
 ### PlatformIO
