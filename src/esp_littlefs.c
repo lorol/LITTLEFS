@@ -46,7 +46,7 @@ static const char TAG[] = "esp_littlefs";
 #define CONFIG_LITTLEFS_READ_SIZE 128
 #define CONFIG_LITTLEFS_WRITE_SIZE 128
 #define CONFIG_LITTLEFS_LOOKAHEAD_SIZE 128
-#define CONFIG_LITTLEFS_CACHE_SIZE 128
+#define CONFIG_LITTLEFS_CACHE_SIZE 512
 #define CONFIG_LITTLEFS_BLOCK_CYCLES 512
 
 //#define CONFIG_SECURE_FLASH_ENC_ENABLED 1 /* For encrypted, in part.csv:  flash_test,  data, spiffs, , 512K, encrypted */
