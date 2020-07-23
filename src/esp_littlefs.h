@@ -13,21 +13,27 @@
 #include <sys/reent.h>
 #include <sys/stat.h>
 #include <sys/time.h>
+//#include <sys/termios.h>
 #include <sys/poll.h>
 #include <dirent.h>
 #include <string.h>
 #include "sdkconfig.h"
 
-#include "lfs.h"
+#include "lfs.h"  //#include "littlefs/lfs.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-enum {
-    LITTLEFS_ATTR_MTIME,   /**< Last Modified - time (seconds) */
-    LITTLEFS_ATTR_MAX
-};
+/**
+ * @brief Last Modified Time
+ *
+ * Use 't' for LITTLEFS_ATTR_MTIME to match example:
+ *     https://github.com/ARMmbed/littlefs/issues/23#issuecomment-482293539
+ * And to match other external tools such as:
+ *     https://github.com/earlephilhower/mklittlefs
+ */
+#define LITTLEFS_ATTR_MTIME ((uint8_t) 't')
 
 /**
  *Configuration structure for esp_vfs_littlefs_register.
