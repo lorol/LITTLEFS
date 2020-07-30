@@ -11,8 +11,8 @@
 ```diff
 ! Warning: This wrapper depends on ESP-IDF, esp32 core, esp_littlefs and Mbed LittleFS versions
 ```
+- Tested with esp32 cores built on IDFv3.2, IDFv3.3 and esp32s2 on IDFv4.2 
 - For esp32 core release 1.0.4 w/ IDFv3.2 you need to uncomment this line in **esp_littlefs.c**:  ```//#define CONFIG_LITTLEFS_FOR_IDF_3_2```
-- Tested with [esp32-core #git b92c58d](https://github.com/espressif/arduino-esp32/commit/b92c58d74b151c7a3b56db4e78f2d3c90c16446f) and on core [release 1.0.4](https://github.com/espressif/arduino-esp32/releases/tag/1.0.4)
 - See LITTLEFS_time example with file timestamps that works with esp32 core on IDF v3.3
 
 ### Installation

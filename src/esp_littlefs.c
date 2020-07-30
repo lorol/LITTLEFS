@@ -25,7 +25,13 @@
 #include <sys/fcntl.h>
 #include <sys/lock.h>
 #include <sys/param.h>
+
+#if __has_include("esp32/rom/spi_flash.h") 
+#include "esp32/rom/spi_flash.h"
+#else 
 #include "rom/spi_flash.h"
+#endif
+
 #include "esp_system.h"
 
 #include "esp_littlefs.h"
