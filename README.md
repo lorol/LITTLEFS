@@ -1,4 +1,4 @@
-# LITTLEFS
+# LittleFS_esp32
 
 ## LittleFS library for arduino-esp32
 
@@ -6,18 +6,18 @@
 - Based on [ESP-IDF port of joltwallet/esp_littlefs](https://github.com/joltwallet/esp_littlefs) , thank you Brian!
 - See also the [LillteFS library for ESP8266 core](https://github.com/esp8266/Arduino/tree/master/libraries/LittleFS) 
 - Functionality is similar to SPIFFS
-- [Related PR at esp32 core development](https://github.com/espressif/arduino-esp32/pull/4096) 
-- [Related PR at esp-idf development](https://github.com/espressif/esp-idf/pull/5469)
+- [PR at esp32 core development](https://github.com/espressif/arduino-esp32/pull/4096) 
+- [PR at esp-idf development](https://github.com/espressif/esp-idf/pull/5469)
 ```diff
-! Warning: This wrapper depends on ESP-IDF, esp32 core, esp_littlefs and Mbed LittleFS versions
+! Warning: This wrapper depends on ESP-IDF version the esp32 core is built on
 ```
-- Tested with esp32 cores built on IDFv3.2, IDFv3.3 and esp32s2 on IDFv4.2 
-- For esp32 core release 1.0.4 w/ IDFv3.2 you need to uncomment this line in **esp_littlefs.c**:  ```//#define CONFIG_LITTLEFS_FOR_IDF_3_2```
+- Tested with esp32 cores built on IDFv3.2, IDFv3.3 and IDFv4 - IDFv4.3
 - See LITTLEFS_time example with file timestamps that works with esp32 core on IDF v3.3
 
 ### Installation
 
-- Copy **LITTLEFS** to Arduino IDE **/libraries** folder (File > Preferences > Sketchbook location). 
+- If it gets accepted for [Arduino Library Manager](https://github.com/arduino/Arduino/wiki/Library-Manager-FAQ ), take it from there. The release 1.0 is compatible to core 1.0.4 and PlatformIO
+- Use git or copy  **LITTLEFS** to Arduino IDE **/libraries** folder (File > Preferences > Sketchbook location) and adjust ```//#define CONFIG_LITTLEFS_FOR_IDF_3_2``` in **esp_littlefs.c** if needed. For all higher version, it should be commented. 
 
 ### Usage
 

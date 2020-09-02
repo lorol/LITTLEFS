@@ -1,10 +1,10 @@
 {
-  "name":"LITTLEFS",
-  "description":"LITTLEFS File System Library for ESP32",
+  "name":"LittleFS_esp32",
+  "description":"LittleFS for esp32",
   "keywords":"littlefs, spiffs",
   "authors":
   {
-    "name": "LL",
+    "name": "lorol",
     "maintainer": true
   },
   "repository":
