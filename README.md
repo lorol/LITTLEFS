@@ -11,12 +11,13 @@
 
 ### Installation
 
-- Use **Arduino Library Manager** to check if its available there.
+- Use **Arduino Library Manager** 
 - Or download / use **git** to have latest repository of **LITTLEFS** added to Arduino IDE **/libraries** folder  
 (File > Preferences > Sketchbook location).
 - See ``` #define CONFIG_LITTLEFS_FOR_IDF_3_2 ``` in **esp_littlefs.c**.  
-On IDF newer than 3.2, it **can** be commented to enable file timestamp feature.  
-See LITTLEFS_time example. If it is uncommented, it builds with esp32 core based on any IDF 3.2 - 4.3
+When defined, code builds with any IDF 3.2 - 4.x.  
+On IDF newer than 3.2, it **can** be commented to enable file timestamp feature.
+See LITTLEFS_time example.
 - The other ``` #define CONFIG_LITTLEFS_xxxxx ``` are set to optimal default values.  
 Read [here](https://github.com/joltwallet/esp_littlefs/blob/master/Kconfig) and [here](https://github.com/ARMmbed/littlefs/blob/master/README.md) if you want to modify.
 
@@ -39,7 +40,7 @@ Read [here](https://github.com/joltwallet/esp_littlefs/blob/master/Kconfig) and 
 
 ### Differences with SPIFFS 
 
-- LittleFS has folders, you need need to iterate files in folders. See **To Do** below.
+- LittleFS has folders, you need to iterate files in folders. See **To Do** below.
 - At root a "/folder" = "folder"
 - Requires a label for mount point, NULL will not work
 - maxOpenFiles parameter is unused, kept for compatibility
