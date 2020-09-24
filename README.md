@@ -63,7 +63,9 @@ Read [here](https://github.com/joltwallet/esp_littlefs/blob/master/Kconfig) and 
 - Restart Arduino IDE. 
 
 ### PlatformIO
- ( notes from [BlueAndi](https://github.com/BlueAndi) )
+
+- See [LITTLEFS_PlatformIO example here](https://github.com/lorol/LITTLEFS/tree/master/examples/LITTLEFS_PlatformIO)  
+ ( based on notes below from [BlueAndi](https://github.com/BlueAndi) )
 - Add to _platformio.ini_:
  `extra_scripts = replace_fs.py`
  
