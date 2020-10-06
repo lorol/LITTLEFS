@@ -1,6 +1,6 @@
 # How to run on PlatformIO IDE
 
-- Download and extract here the **mklittlefs** executable for your OS from a zipped binary [here](https://github.com/earlephilhower/mklittlefs/releases) 
+- Download and extract to project root a **mklittlefs** executable for your OS from a zipped binary [here](https://github.com/earlephilhower/mklittlefs/releases) 
 - Open **LITTLEFS_PlatformIO** folder
 - Run PlatformIO project task: **Upload Filesystem Image** 
 - Run PlatformIO project task: **Upload and Monitor**

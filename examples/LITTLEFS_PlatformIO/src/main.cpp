@@ -2,6 +2,10 @@
 #include "FS.h"
 #include <LITTLEFS.h>
 
+#ifndef CONFIG_LITTLEFS_FOR_IDF_3_2
+ #include <time.h>
+#endif
+
 /* You only need to format LITTLEFS the first time you run a
    test or else use the LITTLEFS plugin to create a partition
    https://github.com/lorol/arduino-esp32littlefs-plugin */
@@ -25,15 +29,29 @@ void listDir(fs::FS &fs, const char * dirname, uint8_t levels){
     while(file){
         if(file.isDirectory()){
             Serial.print("  DIR : ");
-            Serial.println(file.name());
+            Serial.print (file.name());
+
+#ifndef CONFIG_LITTLEFS_FOR_IDF_3_2
+            time_t t= file.getLastWrite();
+            struct tm * tmstruct = localtime(&t);
+            Serial.printf("  LAST WRITE: %d-%02d-%02d %02d:%02d:%02d\n",(tmstruct->tm_year)+1900,( tmstruct->tm_mon)+1, tmstruct->tm_mday,tmstruct->tm_hour , tmstruct->tm_min, tmstruct->tm_sec);
+#endif
+
             if(levels){
                 listDir(fs, file.name(), levels -1);
             }
         } else {
             Serial.print("  FILE: ");
             Serial.print(file.name());
-            Serial.print("\tSIZE: ");
-            Serial.println(file.size());
+            Serial.print("  SIZE: ");
+            Serial.print(file.size());
+
+#ifndef CONFIG_LITTLEFS_FOR_IDF_3_2
+            time_t t= file.getLastWrite();
+            struct tm * tmstruct = localtime(&t);
+            Serial.printf("  LAST WRITE: %d-%02d-%02d %02d:%02d:%02d\n",(tmstruct->tm_year)+1900,( tmstruct->tm_mon)+1, tmstruct->tm_mday,tmstruct->tm_hour , tmstruct->tm_min, tmstruct->tm_sec);
+#endif
+
         }
         file = root.openNextFile();
     }
