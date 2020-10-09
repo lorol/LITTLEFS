@@ -29,9 +29,11 @@ void listDir(fs::FS &fs, const char * dirname, uint8_t levels){
     while(file){
         if(file.isDirectory()){
             Serial.print("  DIR : ");
-            Serial.print (file.name());
 
-#ifndef CONFIG_LITTLEFS_FOR_IDF_3_2
+#ifdef CONFIG_LITTLEFS_FOR_IDF_3_2
+            Serial.println(file.name());
+#else
+            Serial.print(file.name());
             time_t t= file.getLastWrite();
             struct tm * tmstruct = localtime(&t);
             Serial.printf("  LAST WRITE: %d-%02d-%02d %02d:%02d:%02d\n",(tmstruct->tm_year)+1900,( tmstruct->tm_mon)+1, tmstruct->tm_mday,tmstruct->tm_hour , tmstruct->tm_min, tmstruct->tm_sec);
@@ -44,14 +46,15 @@ void listDir(fs::FS &fs, const char * dirname, uint8_t levels){
             Serial.print("  FILE: ");
             Serial.print(file.name());
             Serial.print("  SIZE: ");
-            Serial.print(file.size());
 
-#ifndef CONFIG_LITTLEFS_FOR_IDF_3_2
+#ifdef CONFIG_LITTLEFS_FOR_IDF_3_2
+            Serial.println(file.size());
+#else
+            Serial.print(file.size());
             time_t t= file.getLastWrite();
             struct tm * tmstruct = localtime(&t);
             Serial.printf("  LAST WRITE: %d-%02d-%02d %02d:%02d:%02d\n",(tmstruct->tm_year)+1900,( tmstruct->tm_mon)+1, tmstruct->tm_mday,tmstruct->tm_hour , tmstruct->tm_min, tmstruct->tm_sec);
 #endif
-
         }
         file = root.openNextFile();
     }
@@ -141,6 +144,66 @@ void deleteFile(fs::FS &fs, const char * path){
     }
 }
 
+// SPIFFS-like write and delete file
+
+// See: https://github.com/esp8266/Arduino/blob/master/libraries/LittleFS/src/LittleFS.cpp#L60
+void writeFile2(fs::FS &fs, const char * path, const char * message){
+    if(!fs.exists(path)){
+		if (strchr(path, '/')) {
+            Serial.printf("Create missing folders of: %s\r\n", path);
+			char *pathStr = strdup(path);
+			if (pathStr) {
+				char *ptr = strchr(pathStr, '/');
+				while (ptr) {
+					*ptr = 0;
+					fs.mkdir(pathStr);
+					*ptr = '/';
+					ptr = strchr(ptr+1, '/');
+				}
+			}
+			free(pathStr);
+		}
+    }
+
+    Serial.printf("Writing file to: %s\r\n", path);
+    File file = fs.open(path, FILE_WRITE);
+    if(!file){
+        Serial.println("- failed to open file for writing");
+        return;
+    }
+    if(file.print(message)){
+        Serial.println("- file written");
+    } else {
+        Serial.println("- write failed");
+    }
+    file.close();
+}
+
+// See:  https://github.com/esp8266/Arduino/blob/master/libraries/LittleFS/src/LittleFS.h#L149
+void deleteFile2(fs::FS &fs, const char * path){
+    Serial.printf("Deleting file and empty folders on path: %s\r\n", path);
+
+    if(fs.remove(path)){
+        Serial.println("- file deleted");
+    } else {
+        Serial.println("- delete failed");
+    }
+
+    char *pathStr = strdup(path);
+    if (pathStr) {
+        char *ptr = strrchr(pathStr, '/');
+        if (ptr) {
+            Serial.printf("Removing all empty folders on path: %s\r\n", path);
+        }
+        while (ptr) {
+            *ptr = 0;
+            fs.rmdir(pathStr);
+            ptr = strrchr(pathStr, '/');
+        }
+        free(pathStr);
+    }
+}
+
 void testFileIO(fs::FS &fs, const char * path){
     Serial.printf("Testing file I/O with %s\r\n", path);
 
@@ -205,10 +268,14 @@ void setup(){
     listDir(LITTLEFS, "/", 0);
 	createDir(LITTLEFS, "/mydir");
 	writeFile(LITTLEFS, "/mydir/hello2.txt", "Hello2");
-	listDir(LITTLEFS, "/", 1);
+  //writeFile(LITTLEFS, "/mydir/newdir2/newdir3/hello3.txt", "Hello3");
+    writeFile2(LITTLEFS, "/mydir/newdir2/newdir3/hello3.txt", "Hello3");
+	listDir(LITTLEFS, "/", 3);
 	deleteFile(LITTLEFS, "/mydir/hello2.txt");
+  //deleteFile(LITTLEFS, "/mydir/newdir2/newdir3/hello3.txt");
+    deleteFile2(LITTLEFS, "/mydir/newdir2/newdir3/hello3.txt");
 	removeDir(LITTLEFS, "/mydir");
-	listDir(LITTLEFS, "/", 1);
+	listDir(LITTLEFS, "/", 3);
     writeFile(LITTLEFS, "/hello.txt", "Hello ");
     appendFile(LITTLEFS, "/hello.txt", "World!\r\n");
     readFile(LITTLEFS, "/hello.txt");
