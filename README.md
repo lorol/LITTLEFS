@@ -1,5 +1,8 @@
 # LittleFS_esp32
 
+### ***Notice: The Library is been integrated to [Arduino esp32 core esp32s2 branch](https://github.com/espressif/arduino-esp32/tree/esp32s2/ ) for future major core release.***
+
+
 ## LittleFS library for arduino-esp32
 
 - A LittleFS wrapper for Arduino ESP32 of [ARMmbed LittleFS](https://github.com/ARMmbed/littlefs)
@@ -91,4 +94,4 @@ Read [here](https://github.com/joltwallet/esp_littlefs/blob/master/Kconfig) and 
     - [recursive folders auto creation](https://github.com/esp8266/Arduino/blob/master/libraries/LittleFS/src/LittleFS.cpp#L60) when a new file is created at non-existing path
     - [recursive folders auto deletion](https://github.com/esp8266/Arduino/blob/master/libraries/LittleFS/src/LittleFS.h#L149) on "last file" deletion (SPIFFS cannot have "folder w/o file")
     - review other differences: opendir(), rmdir(), unlink()
-  - [ ] Follow-up / eventually retire this library if LittleFS gets implemented through IDF / esp32 Arduino core.
+  - [x] Follow-up / eventually retire this library if LittleFS gets implemented through IDF / esp32 Arduino core.
