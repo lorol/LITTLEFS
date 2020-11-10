@@ -1,6 +1,6 @@
 # LittleFS_esp32
 
-### ***Notice: The Library is been integrated to [Arduino esp32 core esp32s2 branch](https://github.com/espressif/arduino-esp32/tree/esp32s2/ ) for future major core release.***
+### ***Notice: The Library is been integrated to [Arduino esp32 core idf-release/v4.2 branch](https://github.com/espressif/arduino-esp32/tree/idf-release/v4.2 ) for future major core release.***
 
 
 ## LittleFS library for arduino-esp32
