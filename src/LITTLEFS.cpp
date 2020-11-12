@@ -42,7 +42,6 @@ bool LITTLEFSFS::begin(bool formatOnFail, const char * basePath, uint8_t maxOpen
     esp_vfs_littlefs_conf_t conf = {
       .base_path = basePath,
       .partition_label = LFS_NAME,
-      //.max_files = maxOpenFiles,
       .format_if_mount_failed = false
     };
 
