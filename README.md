@@ -5,7 +5,7 @@
 
 ## LittleFS library for arduino-esp32
 
-- A LittleFS wrapper for Arduino ESP32 of [ARMmbed LittleFS](https://github.com/ARMmbed/littlefs)
+- A LittleFS wrapper for Arduino ESP32 of [littlefs-project](https://github.com/littlefs-project/littlefs)
 - Based on [ESP-IDF port of joltwallet/esp_littlefs](https://github.com/joltwallet/esp_littlefs) , thank you Brian!
 - As a reference, see [LillteFS library for ESP8266 core](https://github.com/esp8266/Arduino/tree/master/libraries/LittleFS)
 - [PR at esp32 core development](https://github.com/espressif/arduino-esp32/pull/4096) 
@@ -21,12 +21,14 @@
 When defined, code builds with any IDF 3.2 - 4.x.  
 On IDF newer than 3.2, it **can** be commented to enable file timestamp feature.
 See LITTLEFS_time example.
+- See ``` #define CONFIG_LITTLEFS_SPIFFS_COMPAT ``` in **esp_littlefs.c**.  
+When set to 1, folders are recursively created or deleted if empty on creating/deleting a new file like SPIFFS. Default is 0.
 - The other ``` #define CONFIG_LITTLEFS_xxxxx ``` are set to optimal default values.  
 Read [here](https://github.com/joltwallet/esp_littlefs/blob/master/Kconfig) and [here](https://github.com/ARMmbed/littlefs/blob/master/README.md) if you want to modify.
 
 ### Usage
 
-- Use LITTLEFS same way as SPIFFS
+- Use LITTLEFS [with identical methods as SPIFFS](https://diyprojects.io/esp32-get-started-spiff-library-read-write-modify-files/) plus mkdir() and rmdir()
 - A quick startup based on your existing code you can re-define SPIFFS
 ``` 
 #define USE_LittleFS
@@ -40,14 +42,16 @@ Read [here](https://github.com/joltwallet/esp_littlefs/blob/master/Kconfig) and 
 #endif 
  ```
  - Note, this may not work if your sketch uses other libraries that use SPIFFS themselves.
+ - See also [esp_partition.h](https://github.com/espressif/esp-idf/blob/master/components/spi_flash/include/esp_partition.h) . LITTLEFS re-uses same type and subtype.
 
 ### Differences with SPIFFS 
 
-- LittleFS has folders, you need to iterate files in folders. See **To Do** below.
+- LittleFS has folders, you need to iterate files in folders or set  ``` #define CONFIG_LITTLEFS_SPIFFS_COMPAT 1 ```  
 - At root a "/folder" = "folder"
-- Requires a label for mount point, NULL will not work
+- Requires a label for mount point, NULL will not work. Recommended is to use default LITTLEFS.begin()
 - maxOpenFiles parameter is unused, kept for compatibility
-- LITTLEFS.mkdir(path) and  LITTLEFS.rmdir(path) work as expected for folders
+- LITTLEFS.mkdir(path) and LITTLEFS.rmdir(path) are available
+- file.seek() behaves like on FFat see [more details](https://github.com/lorol/LITTLEFS/issues/11)
 - Speed comparison based on **LittleFS_test.ino** sketch (for a file 1048576 bytes):
 
 |Filesystem|Read time [ms]|Write time [ms]|
@@ -85,13 +89,13 @@ Read [here](https://github.com/joltwallet/esp_littlefs/blob/master/Kconfig) and 
 
 ## Credits and license
 
-- This work is based on [ARMmbed LittleFS](https://github.com/ARMmbed/littlefs) , [ESP-IDF port of joltwallet/esp_littlefs](https://github.com/joltwallet/esp_littlefs) , [Espressif Arduino core for the ESP32, the ESP-IDF - SPIFFS Library](https://github.com/espressif/arduino-esp32/tree/master/libraries/SPIFFS)
+- This work is based on [littlefs-project](https://github.com/littlefs-project/littlefs) , [ESP-IDF port of joltwallet/esp_littlefs](https://github.com/joltwallet/esp_littlefs) , [Espressif Arduino core for the ESP32, the ESP-IDF - SPIFFS Library](https://github.com/espressif/arduino-esp32/tree/master/libraries/SPIFFS)
 - Licensed under GPL v2 ([text](LICENSE))
 
 ## To Do
   - [x] Submit to be added to Arduino Library Manager
-  - [ ] Decide on more compatibility (or not) with SPIFFS' lack of folders, similar to esp8266' way:
+  - [x] Optional drop-in compatibility with SPIFFS' lack of folders, similar to esp8266' way - implemented as a choice by a #define
     - [recursive folders auto creation](https://github.com/esp8266/Arduino/blob/master/libraries/LittleFS/src/LittleFS.cpp#L60) when a new file is created at non-existing path
     - [recursive folders auto deletion](https://github.com/esp8266/Arduino/blob/master/libraries/LittleFS/src/LittleFS.h#L149) on "last file" deletion (SPIFFS cannot have "folder w/o file")
     - review other differences: opendir(), rmdir(), unlink()
-  - [x] Follow-up / eventually retire this library if LittleFS gets implemented through IDF / esp32 Arduino core.
+  - [x] Follow-up / retire this library if LittleFS gets implemented through IDF / esp32 Arduino core.
