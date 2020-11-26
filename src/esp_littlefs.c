@@ -12,7 +12,26 @@
  */
 
 //#define LOG_LOCAL_LEVEL 5
-//#define CONFIG_LITTLEFS_FOR_IDF_3_2      /* For old IDF 3.2 compatibility, core release 1.0.4 - no timestamps */
+
+#if __has_include("esp_arduino_version.h")
+#include "esp_arduino_version.h"
+#if ESP_ARDUINO_VERSION >= ESP_ARDUINO_VERSION_VAL(2, 0, 0)
+#warning("Use the built-in LITTLEFS library")
+#endif
+#else
+//#warning("LITTLEFS: no esp_arduino_version.h file, likely 1.0.x")
+#endif
+
+#if __has_include("esp_idf_version.h")
+#include "esp_idf_version.h"
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(3, 3, 0)
+//#warning("IDF is 3.3 or later, LittleFS file timestamps are enabled")
+#endif
+#else
+#define CONFIG_LITTLEFS_FOR_IDF_3_2      /* For old IDF 3.2 compatibility, core release 1.0.4 - no timestamps */
+//#warning("IDF < 3.3, no LittleFS file timestamps")
+#endif
+
 //#define CONFIG_LITTLEFS_USE_ONLY_HASH
 #define CONFIG_LITTLEFS_HUMAN_READABLE 0   /* Use 1 for verbose errors */
 #define CONFIG_LITTLEFS_SPIFFS_COMPAT 0    /* Use 1 for better drop-in replacement of SPIFFS */
@@ -44,9 +63,11 @@
 #include <sys/lock.h>
 #include <sys/param.h>
 
-#if __has_include("esp32/rom/spi_flash.h") 
+#if __has_include("esp32/rom/spi_flash.h")
+//#warning("LITTLEFS: IDF 4, spi_flash.h file location different from IDF 3")
 #include "esp32/rom/spi_flash.h"
-#else 
+#else
+//#warning("LITTLEFS: IDF 3")
 #include "rom/spi_flash.h"
 #endif
 

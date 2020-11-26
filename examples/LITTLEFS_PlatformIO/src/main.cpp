@@ -144,9 +144,8 @@ void deleteFile(fs::FS &fs, const char * path){
     }
 }
 
-// SPIFFS-like write and delete file
+// SPIFFS-like write and delete file, better use #define CONFIG_LITTLEFS_SPIFFS_COMPAT 1
 
-// See: https://github.com/esp8266/Arduino/blob/master/libraries/LittleFS/src/LittleFS.cpp#L60
 void writeFile2(fs::FS &fs, const char * path, const char * message){
     if(!fs.exists(path)){
 		if (strchr(path, '/')) {
@@ -179,7 +178,6 @@ void writeFile2(fs::FS &fs, const char * path, const char * message){
     file.close();
 }
 
-// See:  https://github.com/esp8266/Arduino/blob/master/libraries/LittleFS/src/LittleFS.h#L149
 void deleteFile2(fs::FS &fs, const char * path){
     Serial.printf("Deleting file and empty folders on path: %s\r\n", path);
 

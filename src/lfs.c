@@ -3,7 +3,12 @@
  *
  * Copyright (c) 2017, Arm Limited. All rights reserved.
  * SPDX-License-Identifier: BSD-3-Clause
+ *
+ * @note Modified and used by lorol for Arduino esp32 core tests
  */
+
+//#define LFS_NO_ERROR   /* Change default error reporting level: LFS_NO_DEBUG, LFS_NO_WARN,  LFS_NO_ERROR,  LFS_YES_TRACE */
+
 #include "lfs.h"
 #include "lfs_util.h"
 
@@ -459,7 +464,7 @@ static void lfs_alloc_ack(lfs_t *lfs) {
 // Invalidate the lookahead buffer. This is done during mounting and
 // failed traversals
 static void lfs_alloc_reset(lfs_t *lfs) {
-    lfs->free.off = lfs->seed % lfs->cfg->block_size;
+    lfs->free.off = lfs->seed % lfs->cfg->block_count; //lfs->free.off = lfs->seed % lfs->cfg->block_size;
     lfs->free.size = 0;
     lfs->free.i = 0;
     lfs_alloc_ack(lfs);
