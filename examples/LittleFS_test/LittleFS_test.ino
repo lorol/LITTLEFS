@@ -9,7 +9,7 @@
    If you test two partitions, you need to use a custom
    partition.csv file, see in the sketch folder */
 
-#define TWOPART
+//#define TWOPART
 
 #define FORMAT_LITTLEFS_IF_FAILED true
 
