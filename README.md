@@ -1,6 +1,7 @@
 # LittleFS_esp32
 
-#### ***Ths library is now part of [Arduino esp32 core v2](https://github.com/espressif/arduino-esp32/tree/master/libraries/LITTLEFS )***  
+#### ***Ths library is now part of [Arduino esp32 core v2](https://github.com/espressif/arduino-esp32/tree/master/libraries/LittleFS )***  
+Note, there it is renamed from LITTLEFS to LittleFS,
 ***Please post your issues there. This here is kept for Arduino esp32 core 1.x purposes***
 
 ## LittleFS library for arduino-esp32
