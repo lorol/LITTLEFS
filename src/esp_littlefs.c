@@ -185,8 +185,10 @@ esp_err_t esp_littlefs_info(const char* partition_label, size_t *total_bytes, si
     if(err != ESP_OK) return false;
     efs = _efs[index];
 
+    sem_take(efs);
     if(total_bytes) *total_bytes = efs->cfg.block_size * efs->cfg.block_count; 
     if(used_bytes) *used_bytes = efs->cfg.block_size * lfs_fs_size(efs->fs);
+    sem_give(efs);
 
     return ESP_OK;
 }
