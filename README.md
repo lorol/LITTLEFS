@@ -85,7 +85,8 @@ Read [here](https://github.com/joltwallet/esp_littlefs/blob/master/Kconfig) and 
  ```python
  Import("env")
  print("Replace MKSPIFFSTOOL with mklittlefs.exe")
- env.Replace (MKSPIFFSTOOL = "mklittlefs.exe")
+ env.Replace (MKSPIFFSTOOL = "mklittlefs.exe")    # PlatformIO now believes it has actually created a SPIFFS
+ #env.Replace( MKSPIFFSTOOL = env.get("PROJECT_DIR") + '/mklittlefs' )    # use this line if above not work.
  ```
  
 - Add _mklittlefs.exe_ to project root directory as well.
