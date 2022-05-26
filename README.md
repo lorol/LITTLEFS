@@ -1,6 +1,6 @@
 # LittleFS_esp32
 
-This is a fork from lorel LittleFS, with a few additional fixes to improve thread-safety.
+This is a fork from lorol LittleFS, with a few additional fixes to improve thread-safety.
 
 
 #### ***Ths library is now part of [Arduino esp32 core v2](https://github.com/espressif/arduino-esp32/tree/master/libraries/LittleFS )***  
