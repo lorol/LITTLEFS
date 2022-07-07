@@ -41,7 +41,11 @@ LITTLEFSImpl::LITTLEFSImpl()
 
 bool LITTLEFSImpl::exists(const char* path)
 {
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 3, 0)
+    File f = open(path, "r", false);
+#else
     File f = open(path, "r");
+#endif
     return (f == true);
 }
 
