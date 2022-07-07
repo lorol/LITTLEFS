@@ -16,9 +16,6 @@
 
 #include "FS.h"
 
-// just for WLED, so it can recognise my fork.
-#define LITTLEFS_threadsafe_SOFTHACK007
-
 namespace fs
 {
 
