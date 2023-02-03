@@ -1572,6 +1572,7 @@ static int lfs_dir_commit_commit(void *p, lfs_tag_t tag, const void *buffer) {
 static int lfs_dir_compact(lfs_t *lfs,
         lfs_mdir_t *dir, const struct lfs_mattr *attrs, int attrcount,
         lfs_mdir_t *source, uint16_t begin, uint16_t end) {
+    int counter = 0;
     // save some state in case block is bad
     const lfs_block_t oldpair[2] = {dir->pair[0], dir->pair[1]};
     bool relocated = false;
@@ -1793,6 +1794,11 @@ relocate:
         lfs_cache_drop(lfs, &lfs->pcache);
         if (!tired) {
             LFS_DEBUG("Bad block at 0x%"PRIx32, dir->pair[1]);
+            if (counter > 10) {
+                LFS_DEBUG("Exiting bad bad block loop after 10 retries");
+                return LFS_ERR_CORRUPT;
+            }
+            counter++;
         }
 
         // can't relocate superblock, filesystem is now frozen
@@ -2321,6 +2327,8 @@ static int lfs_ctz_extend(lfs_t *lfs,
         lfs_cache_t *pcache, lfs_cache_t *rcache,
         lfs_block_t head, lfs_size_t size,
         lfs_block_t *block, lfs_off_t *off) {
+    int counter = 0;
+
     while (true) {
         // go ahead and grab a block
         lfs_block_t nblock;
@@ -2412,6 +2420,12 @@ relocate:
 
         // just clear cache and try a new block
         lfs_cache_drop(lfs, pcache);
+
+        if (counter > 10) {
+            LFS_DEBUG("Exiting bad bad block loop after 10 retries");
+            return LFS_ERR_CORRUPT;
+        }
+        counter++;
     }
 }
 #endif
@@ -2652,6 +2666,8 @@ static int lfs_file_rawclose(lfs_t *lfs, lfs_file_t *file) {
 
 #ifndef LFS_READONLY
 static int lfs_file_relocate(lfs_t *lfs, lfs_file_t *file) {
+    int counter = 0;
+
     while (true) {
         // just relocate what exists into new block
         lfs_block_t nblock;
@@ -2717,6 +2733,12 @@ relocate:
 
         // just clear cache and try a new block
         lfs_cache_drop(lfs, &lfs->pcache);
+
+        if (counter > 10) {
+            LFS_DEBUG("Exiting bad bad block loop after 10 retries");
+            return LFS_ERR_CORRUPT;
+        }
+        counter++;
     }
 }
 #endif
@@ -5432,4 +5454,3 @@ int lfs_migrate(lfs_t *lfs, const struct lfs_config *cfg) {
     return err;
 }
 #endif
-
